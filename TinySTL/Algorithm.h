@@ -1,24 +1,27 @@
 #ifndef _ALGORITHM_H_
 #define _ALGORITHM_H_
-
+	// 引入标准库头文件
 #include <cstring>
 #include <utility>
-
+	// 引入自定义头文件
 #include "Allocator.h"
 #include "Functional.h"
 #include "Iterator.h"
 #include "TypeTraits.h"
 #include "Utility.h"
-
+	// 命名空间命名
 namespace TinySTL{
-	//********* [fill] ********************
-	//********* [Algorithm Complexity: O(N)] ****************
+		// 定义fill模板函数，该函数接受两个参数，在C++ 11中可以使用typename来替换class
 	template<class ForwardIterator, class T>
 	void fill(ForwardIterator first, ForwardIterator last, const T& value)
 	{
+		// 替换从first到last范围内的值，将其替换为指定的value值
+		zhiu
 		for (; first != last; ++first)
 			*first = value;
 	}
+	// 定义对应的内联重载函数对应char版本和wchat_t（宽字符版本）
+	// 使用<cstring>中的memset将其替换为对应的unsigned char类型的value
 	inline void fill(char *first, char *last, const char& value)
 	{
 		memset(first, static_cast<unsigned char>(value), last - first);
@@ -27,8 +30,9 @@ namespace TinySTL{
 	{
 		memset(first, static_cast<unsigned char>(value), (last - first) * sizeof(wchar_t));
 	}
-	//********* [fill_n] ********************
-	//********* [Algorithm Complexity: O(N)] ****************
+
+
+	// 修改对应Size大小范围内的值，将其替换为value
 	template<class OutputIterator, class Size, class T>
 	OutputIterator fill_n(OutputIterator first, Size n, const T& value)
 	{
@@ -71,7 +75,7 @@ namespace TinySTL{
 	//********** [make_heap] ***************
 	//********* [Algorithm Complexity: O(N)] ****************
 	template<class RandomAccessIterator, class Compare>
-	//heap�����㷨
+	//heap上溯算法
 	static void up(RandomAccessIterator first, RandomAccessIterator last, 
 		RandomAccessIterator head, Compare comp){//1.[first, last], 2.headr points the header of the heap
 		if (first != last){
@@ -87,7 +91,7 @@ namespace TinySTL{
 		}
 	}
 	template<class RandomAccessIterator, class Compare>
-	//heap�½��㷨
+	//heap下降算法
 	static void down(RandomAccessIterator first, RandomAccessIterator last, 
 		RandomAccessIterator head, Compare comp){//1.[first, last], 2.headr points the header of the heap
 		if (first != last){
@@ -494,7 +498,7 @@ namespace TinySTL{
 				swap(*last, *first);
 			}
 			auto ret = *mid;
-			swap(*mid, *(last - 1));//��mid item��λ��Ϊ�ڱ�
+			swap(*mid, *(last - 1));//将mid item换位作为哨兵
 			return ret;
 		}
 		template<class RandomIterator, class BinaryPredicate>
@@ -521,7 +525,7 @@ namespace TinySTL{
 	void sort(RandomIterator first, RandomIterator last, BinaryPredicate pred){
 		if (first >= last || first + 1 == last)
 			return;
-		if (last - first <= 20)//���䳤��С�ڵ���20�Ĳ���ð���������
+		if (last - first <= 20)//区间长度小于等于20的采用冒泡排序更快
 			return bubble_sort(first, last, pred);
 		auto mid = mid3(first, last - 1, pred);
 		auto p1 = first, p2 = last - 2;
@@ -532,7 +536,7 @@ namespace TinySTL{
 				swap(*p1, *p2);
 			}
 		}
-		swap(*p1, *(last - 2));//����Ϊ�ڱ���mid item����ԭ����λ��
+		swap(*p1, *(last - 2));//将作为哨兵的mid item换回原来的位置
 		sort(first, p1, pred);
 		sort(p1 + 1, last, pred);
 	}
