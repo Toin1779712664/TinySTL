@@ -40,40 +40,46 @@ namespace TinySTL{
 			*first = value;
 		return first;
 	}
+	// 字符类型的实现，大小为Size，使用static_cast<unsigned char>将value的类型转换为unsigned char后并使用memset修改大小n范围内的值,并返回所修改的大小
 	template<class Size>
 	char *fill_n(char *first, Size n, const char& value)
 	{
 		memset(first, static_cast<unsigned char>(value), n);
 		return first + n;
 	}
+	// 宽字符类型的实现，大小为Size，使用static_cast<unsigned char>将value的类型转换为unsigned char后并使用memset修改大小n范围内的值，并返回所修改的大小
 	template<class Size>
 	wchar_t *fill_n(wchar_t *first, Size n, const wchar_t& value)
 	{
 		memset(first, static_cast<unsigned char>(value), n * sizeof(wchar_t));
 		return first + n;
 	}
-	//*********** [min] ********************
-	//********* [Algorithm Complexity: O(1)] ****************
+	// 使用模板来返回最小值，代码中通过将a和b进行大小比较并使用逻辑非运算符(!)将原来正确的结果进行否定并返回最小的那个数
+	// 如传入min(2,3)此时a的值为2，b的值为3，在判断语句中3<2为false使用逻辑非运算后将false变为true接着返回a
+	// 再如传入min(7，2)此时a的值为7，b的值为2，在判断语句中2<7为true使用逻辑非运算后将变为false接着返回b
 	template <class T> 
 	const T& min(const T& a, const T& b){
 		return !(b < a) ? a : b;
 	}
+	// 使用内置comp函数，原理如上
 	template <class T, class Compare>
 	const T& min(const T& a, const T& b, Compare comp){
 		return !comp(b, a) ? a : b;
 	}
-	//*********** [max] ********************
-	//********* [Algorithm Complexity: O(1)] ****************
+
+
+	// 返回最大的那个数，如果a小于b那么返回b否则返回a
 	template <class T> 
 	const T& max(const T& a, const T& b){
 		return (a < b) ? b : a;
 	}
+	// 使用comp进行比较，与上述相同
 	template <class T, class Compare>
 	const T& max(const T& a, const T& b, Compare comp){
 		return (copm(a, b)) ? b : a;
 	}
-	//********** [make_heap] ***************
-	//********* [Algorithm Complexity: O(N)] ****************
+
+	//
 	template<class RandomAccessIterator, class Compare>
 	//heap上溯算法
 	static void up(RandomAccessIterator first, RandomAccessIterator last, 
