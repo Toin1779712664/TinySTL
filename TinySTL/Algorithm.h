@@ -16,7 +16,6 @@ namespace TinySTL{
 	void fill(ForwardIterator first, ForwardIterator last, const T& value)
 	{
 		// 替换从first到last范围内的值，将其替换为指定的value值
-		zhiu
 		for (; first != last; ++first)
 			*first = value;
 	}
